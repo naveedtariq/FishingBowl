@@ -2,6 +2,9 @@ Fishingbowl::Application.routes.draw do
 	resources :photos
 
   root :to => "home#show"
+
+	match '/:controller(/:action(/:id))'
+	match '/:controller(/:action(/:id)).:format'
 	
 
   # The priority is based upon order of creation:
