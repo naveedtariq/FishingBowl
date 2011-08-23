@@ -43,6 +43,17 @@ h2{
 	top: 82px;
 }
 
+h3.Login
+{
+	font-family: 'Segoe UI Light','Segoe UI',Arial,sans-serif;
+	font-weight: normal;
+}
+h3.Login:hover
+{
+	cursor: pointer;
+	text-decoration: underline;
+}
+
 #topBar{
 	background:url('../images/top_bar_bg.jpg') repeat-x;
 	height:163px;

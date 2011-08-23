@@ -1,7 +1,13 @@
-
 <div id="topBar">
 	<h1>FishingBowl</h1>
+	<h3 class="Login" onClick="$('a.loginbox').trigger('click');">Sign in</h3>
+	<% if session[:logged_in] == "yes" %>
+		<h3 class="Login" onClick="$('a.invitebox').trigger('click');">Invite Friends</h3>
+	<% end %>
 </div>
+
+<a href="/loginbox.html" class="loginbox"></a>
+<a href="/invitebox.html" class="invitebox"></a>
 
 <div id="photos"></div>
 
@@ -29,5 +35,3 @@
 		<%= form.submit %>
 	<% end %>
 </div>
-<%= link_to 'Login Using Yahoo' , '/yahoo' %>
-

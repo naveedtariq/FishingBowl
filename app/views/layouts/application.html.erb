@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
 <head>
   <title>Fishingbowl</title>
@@ -8,9 +7,12 @@
 
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag 'script'  %>
+  <%= javascript_include_tag 'popups'  %>
+  <%= javascript_include_tag 'contacts' %>
   <%= csrf_meta_tag %>
 </head>
-<body>
+
+<body <%= onLoad %> >
 
 <%= yield %>
 
