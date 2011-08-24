@@ -12,10 +12,10 @@ $(document).ready(function(){
 	----------------------------------*/
 
 
-	webcam.set_swf_url('assets/webcam/webcam.swf');
+	webcam.set_swf_url('javascripts/webcam/webcam.swf');
 	webcam.set_api_url('/photos');	// The upload script
 	webcam.set_quality(80);				// JPEG Photo Quality
-	webcam.set_shutter_sound(true, 'assets/webcam/shutter.mp3');
+	webcam.set_shutter_sound(true, 'javascripts/webcam/shutter.mp3');
 
 	// Generating the embed code and adding it to the page:	
 	screen.html(
@@ -106,6 +106,7 @@ $(document).ready(function(){
 		// JSON object format:
 		
 		msg = $.parseJSON(msg);
+		alert($msg);
 		
 		if(msg.error){
 			alert(msg.message);
