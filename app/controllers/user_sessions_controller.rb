@@ -8,13 +8,18 @@ class UserSessionsController < ApplicationController
 
 	def session_create
 		email = session[:email]
-		unless User.exists?(:email => email)
+	
+		begin
+			User.find(:email => email)
+		rescue
 			@new_user = User.new(:email => email)
 			@new_user.save
 		end
-	
-    	unless UserSession.exists?(:email => :email)
-    		@new_session = User.new(:email => email)
+		
+    	begin
+    		UserSession.find(:email => :email)
+    	rescue
+    		@new_session = UserSession.new(:email => email)
     		@new_session.save
 		end
 		

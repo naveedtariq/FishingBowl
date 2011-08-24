@@ -1,8 +1,9 @@
 <div id="topBar">
 	<h1>FishingBowl</h1>
 	<h3 class="Login" onClick="$('a.loginbox').trigger('click');">Sign in</h3>
-	<% if session[:logged_in] == "yes" %>
+	<% if current_user %>
 		<h3 class="Login" onClick="$('a.invitebox').trigger('click');">Invite Friends</h3>
+		<a href="logout"><h3 class="Login">Logout</h3></a>
 	<% end %>
 </div>
 

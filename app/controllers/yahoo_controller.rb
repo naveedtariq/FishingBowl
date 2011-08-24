@@ -43,7 +43,7 @@ class YahooController < ApplicationController
       $name_email_map = parse_yahoo_contacts_response(json)
 #			render :json => @name_email_map.to_json]
 
-	  session[:email] = "test@email.com"
+	  session[:email] = "test2@email.com"
 	  redirect_to :controller => 'UserSessions', :action => 'session_create'
     end
   end
