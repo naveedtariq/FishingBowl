@@ -1,5 +1,6 @@
-$(document).ready(function() {
-	$("a.loginbox").fancybox({
+jQuery(document).ready(function() {
+
+	jQuery("a.loginbox").fancybox({
 		'overlayOpacity'	:	0.7,
 		'overlayColor'		:	'black',
 		'overlayShow'		:	true,
@@ -7,7 +8,7 @@ $(document).ready(function() {
 		'zoomSpeedOut'		: 	1000, 
 	})
 	
-	$("a.invitebox").fancybox({
+	jQuery("a.invitebox").fancybox({
 		'overlayOpacity'	:	0.7,
 		'overlayColor'		:	'black',
 		'overlayShow'		:	true,

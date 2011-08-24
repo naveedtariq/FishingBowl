@@ -1,10 +1,14 @@
 Fishingbowl::Application.routes.draw do
+  get "user_sessions/new"
+
 	resources :photos
+	resources :user_sessions
 
   	root :to => "home#show"
 
 	match '/:controller(/:action(/:id))'
 	match '/:controller(/:action(/:id)).:format'
+	match 'logout' => "user_sessions#destroy", :as => :logout
 	
 
   # The priority is based upon order of creation:

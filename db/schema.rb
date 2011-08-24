@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110813182837) do
+ActiveRecord::Schema.define(:version => 20110824220444) do
 
   create_table "photos", :force => true do |t|
     t.datetime "created_at"
@@ -20,5 +20,19 @@ ActiveRecord::Schema.define(:version => 20110813182837) do
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
   end
+
+  create_table "users", :force => true do |t|
+    t.string   "email",             :null => false
+    t.string   "persistence_token", :null => false
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.string   "current_login_ip"
+    t.string   "last_login_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token", :unique => true
 
 end
