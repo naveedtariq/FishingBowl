@@ -48,9 +48,22 @@ $(document).ready(function(){
 	});
 	
 	$('#uploadButton').click(function(){
-		webcam.upload();
-		webcam.reset();
-		togglePane();
+		
+		if($('#logged_in').val() == "true")
+		{
+			webcam.upload();
+			webcam.reset();
+			togglePane();
+		}
+		else
+		{
+			webcam.reset();
+			togglePane();
+			camera.animate({
+				bottom:-466
+			});
+			$('a.loginbox').trigger('click');
+		}
 		return false;
 	});
 

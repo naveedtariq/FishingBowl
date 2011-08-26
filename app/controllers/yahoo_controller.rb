@@ -34,17 +34,28 @@ class YahooController < ApplicationController
       access_token.consumer = yahoo_calendar_consumer
       yahoo_guid = access_token.params[:xoauth_yahoo_guid]
 
+	  puts response = access_token.get("/v1/public/yql?q=select%20*%20from%20social.profile%20where%20guid%3Dme&format=json")
+
       response = access_token.get("/v1/user/#{yahoo_guid}/contacts?format=json&count=max")
       json = ActiveSupport::JSON.decode(response.body)
 
 			detail = access_token.get('/v1/user/4SMB3FTWDB675KQ2RV7ZYS5EWQ/contact/6?format=json')
 			detail = ActiveSupport::JSON.decode(detail.body)	
 #			render :json => detail
-      $name_email_map = parse_yahoo_contacts_response(json)
+      @name_email_map = parse_yahoo_contacts_response(json)
 #			render :json => @name_email_map.to_json]
 
-	  session[:email] = "test2@email.com"
-	  redirect_to :controller => 'UserSessions', :action => 'session_create'
+	  @user_email = "saad@email.com"
+	  
+	  @user = User.find_by_email(@user_email)
+	  if @user.blank?
+	  	@user = User.create(:email => @user_email)
+		save_contacts
+	    flash[:invite] = "yes"
+	  end
+	  UserSession.create(@user)
+
+	  redirect_to root_url
     end
   end
 
@@ -86,7 +97,20 @@ class YahooController < ApplicationController
   end
   
   def getContacts()
-	render :json => $name_email_map.to_json
+  	@name_email_map = {}
+    @contacts_obj_list = current_user.contacts
+    
+    @contacts_obj_list.each do |c|
+    	@name_email_map[c.name] = c.email
+    end
+  	
+  	render :json => @name_email_map.to_json
+  end
+  
+  def save_contacts
+  	@name_email_map.each_key do |c|
+  		@user.contacts.create(:name => c, :email => @name_email_map[c])
+  	end
   end
 
 end

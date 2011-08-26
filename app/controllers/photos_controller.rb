@@ -1,5 +1,7 @@
 class PhotosController < ApplicationController
 
+	before_filter :require_user, :only => :create
+
 	def create
 		File.open(upload_path, 'w') do |f|
       f.write request.raw_post.force_encoding("UTF-8")

@@ -1,11 +1,15 @@
 <div id="topBar">
 	<h1>FishingBowl</h1>
+	<% unless current_user %>
 	<h3 class="Login" onClick="$('a.loginbox').trigger('click');">Sign in</h3>
+	<% end %>
 	<% if current_user %>
 		<h3 class="Login" onClick="$('a.invitebox').trigger('click');">Invite Friends</h3>
 		<a href="logout"><h3 class="Login">Logout</h3></a>
 	<% end %>
 </div>
+
+<%= hidden_field_tag 'logged_in', !current_user.blank? %>
 
 <a href="/loginbox.html" class="loginbox"></a>
 <a href="/invitebox.html" class="invitebox"></a>
@@ -27,12 +31,4 @@
 	</div>
 
 	<span class="settings"></span>
-</div>
-
-
-<div>
-	<% form_for :photo, @photo, :url => photos_path, :html => { :multipart => true } do |form| %>
-		<%= form.file_field :picture %>
-		<%= form.submit %>
-	<% end %>
 </div>
