@@ -34,21 +34,16 @@ class YahooController < ApplicationController
       access_token.consumer = yahoo_calendar_consumer
       yahoo_guid = access_token.params[:xoauth_yahoo_guid]
 
-	  puts response = access_token.get("/v1/public/yql?q=select%20*%20from%20social.profile%20where%20guid%3Dme&format=json")
-
-      response = access_token.get("/v1/user/#{yahoo_guid}/contacts?format=json&count=max")
-      json = ActiveSupport::JSON.decode(response.body)
-
-			detail = access_token.get('/v1/user/4SMB3FTWDB675KQ2RV7ZYS5EWQ/contact/6?format=json')
-			detail = ActiveSupport::JSON.decode(detail.body)	
-#			render :json => detail
-      @name_email_map = parse_yahoo_contacts_response(json)
-#			render :json => @name_email_map.to_json]
-
-	  @user_email = "saad@email.com"
-	  
+	  profile = access_token.get("/v1/user/#{yahoo_guid}/profile?format=json")
+	  pjson = ActiveSupport::JSON.decode(profile.body)
+	  @user_email = parse_email_id(pjson)
 	  @user = User.find_by_email(@user_email)
+	  
 	  if @user.blank?
+	  	contacts = access_token.get("/v1/user/#{yahoo_guid}/contacts?format=json&count=max")
+		cjson = ActiveSupport::JSON.decode(contacts.body)
+		@name_email_map = parse_yahoo_contacts_response(cjson)
+		
 	  	@user = User.create(:email => @user_email)
 		save_contacts
 	    flash[:invite] = "yes"
@@ -57,6 +52,18 @@ class YahooController < ApplicationController
 
 	  redirect_to root_url
     end
+  end
+  
+  def parse_email_id(json)
+  	json['profile']['emails'].each do |ims|
+  		ims.each_key do |k|
+  			if k == 'primary'
+				if ims[k] == true
+					return ims['handle']
+				end
+			end
+  		end
+  	end
   end
 
   def parse_yahoo_contacts_response(json)
